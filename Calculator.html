@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #d7e613; /* Background color */
+        }
+
+        .calculator-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 8px;
+            max-width: 400px;
+            background-color: #0e0f07; /* Calculator background color */
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .output {
+            grid-column: span 4;
+            background-color: #000000; /* Output background color */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding: 25px;
+            font-size: 2.5em;
+            color: #ffffff; /* Output text color */
+        }
+
+        .previous-operand {
+            color: #b9b5b5; /* Previous operand text color */
+        }
+
+        .current-operand {
+            color: #d4d4d4;
+        }
+
+        button {
+            grid-column: span 1;
+            padding: 12px;
+            font-size: 1.2em;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #4d4d4d; /* Button background color */
+            color: #b2d80b; /* Button text color */
+            border: none;
+        }
+
+        button:active {
+            background-color: #333333; /* Active button background color */
+        }
+
+        .span-two{
+            grid-column: span 2;
+        }
+        .span-four{
+            grid-column: span 4;
+        }
+    </style>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function () {
+            const outputPrevious = document.querySelector('.previous-operand');
+            const outputCurrent = document.querySelector('.current-operand');
+            const buttons = document.querySelectorAll('.calculator-grid button');
+
+            let currentOperand = '';
+            let previousOperand = '';
+            let operator = '';
+
+            buttons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    if (button.innerText === 'AC') {
+                        currentOperand = '';
+                        previousOperand = '';
+                        operator = '';
+                    } else if (button.innerText === '=') {
+                        previousOperand = currentOperand;
+                        currentOperand = eval(previousOperand);
+                        operator = '';
+                    } else if (button.innerText === 'DEL') {
+                        currentOperand = currentOperand.slice(0, -1);
+                    } else {
+                        currentOperand += button.innerText;
+                        operator = '';
+                    }
+
+                    outputPrevious.innerText = previousOperand;
+                    outputCurrent.innerText = currentOperand;
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Calculator</h1>
+        <div class="calculator-grid">
+            <div class="output">
+                <div class="previous-operand"></div>
+                <div class="current-operand"></div>            
+            </div>
+            <button class="span-two">AC</button>
+            <button>DEL</button>
+            <button>0</button>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button>+</button>
+            <button>*</button>
+            <button>/</button>
+            <button>-</button>
+            <button class="span-four">=</button>
+        </div>
+    </div>
+</body>
+</html>
